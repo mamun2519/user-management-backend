@@ -1,12 +1,9 @@
-/* eslint-disable no-console */
 import { ErrorRequestHandler } from "express";
-
 import config from "../../config";
-import handleValidationError from "../errors/handleValidation";
-import API_Error from "../errors/ApiError";
-
-import handleCastError from "../errors/handleCastError";
 import { IGenericErrorMessage } from "../../interface/error";
+import API_Error from "../../errors/appError";
+import handleCastError from "../../errors/castError";
+import handleValidationError from "../../errors/validationError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, _req, res, next) => {
   let statusCode = 500;
