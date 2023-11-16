@@ -14,7 +14,21 @@ const getSingleUserById = async (id: string): Promise<IUser | null> => {
   const user = await User.findById(id);
   return user;
 };
+const updateUserByIdFromDB = async (
+  id: string,
+  payload: Partial<IUser>
+): Promise<IUser | null> => {
+  const user = await User.findByIdAndUpdate(id, payload, { new: true });
+  return user;
+};
+
+const deleteUserByIdFromDB = async (id: string): Promise<IUser | null> => {
+  return await User.findByIdAndDelete(id);
+};
 export const UserService = {
   createUserFromDB,
   getAllUserFromDB,
+  getSingleUserById,
+  updateUserByIdFromDB,
+  deleteUserByIdFromDB,
 };
