@@ -10,7 +10,7 @@ const getAllUserFromDB = async (): Promise<IUser[]> => {
   const user = await User.find({});
   return user;
 };
-const getSingleUserById = async (id: string): Promise<IUser | null> => {
+const getSingleUserByIdFromDB = async (id: string): Promise<IUser | null> => {
   const user = await User.findById(id);
   return user;
 };
@@ -28,7 +28,7 @@ const deleteUserByIdFromDB = async (id: string): Promise<IUser | null> => {
 export const UserService = {
   createUserFromDB,
   getAllUserFromDB,
-  getSingleUserById,
+  getSingleUserByIdFromDB,
   updateUserByIdFromDB,
   deleteUserByIdFromDB,
 };

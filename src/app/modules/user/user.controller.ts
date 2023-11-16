@@ -18,7 +18,7 @@ const getAllUser = catchAsyncFn(async (req: Request, res: Response) => {
   sendApiResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "user fetch successfully",
+    message: "user Retrieve successfully",
     data: result,
   });
 });
@@ -28,7 +28,7 @@ const getSingleUserById = catchAsyncFn(async (req: Request, res: Response) => {
   sendApiResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "user fetch successfully",
+    message: "user Retrieve successfully",
     data: result,
   });
 });
