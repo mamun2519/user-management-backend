@@ -6,6 +6,12 @@ const createUserFromDB = async (data: IUser): Promise<IUser> => {
   return user;
 };
 
+const getAllUserFromDB = async (): Promise<IUser[]> => {
+  const user = await User.find({});
+  return user;
+};
+
 export const UserService = {
   createUserFromDB,
+  getAllUserFromDB,
 };
