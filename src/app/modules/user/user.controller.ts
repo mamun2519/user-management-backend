@@ -3,6 +3,9 @@ import catchAsyncFn from "../../../utils/catchAsynFn";
 import sendApiResponse from "../../../utils/apiResponse";
 import { StatusCodes } from "http-status-codes";
 import { UserService } from "./user.services";
+import pick from "../../../utils/pick";
+import { UserSearchAbleFiled } from "./user.constant";
+import { paginationSpeared } from "../../../constents/pagination";
 
 const createUser = catchAsyncFn(async (req: Request, res: Response) => {
   const result = await UserService.createUserFromDB(req.body);
@@ -14,12 +17,17 @@ const createUser = catchAsyncFn(async (req: Request, res: Response) => {
   });
 });
 const getAllUser = catchAsyncFn(async (req: Request, res: Response) => {
-  const result = await UserService.getAllUserFromDB();
+  // search and filter speared
+  const filter: any = pick(req.query, UserSearchAbleFiled);
+  // pagination speared
+  const pagination = pick(req.query, paginationSpeared);
+  const result = await UserService.getAllUserFromDB(filter, pagination);
   sendApiResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: "user Retrieve successfully",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 
