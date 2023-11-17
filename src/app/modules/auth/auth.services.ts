@@ -9,7 +9,7 @@ import { Secret } from "jsonwebtoken";
 export const signUpUserFromDB = async (
   data: IUser
 ): Promise<{ user: IUser; accessToken: string }> => {
-  const isExistUser = await User.find({ email: data.email });
+  const isExistUser = await User.findOne({ email: data.email });
   if (isExistUser) {
     throw new API_Error(StatusCodes.BAD_REQUEST, "User Already exist");
   }
@@ -22,6 +22,27 @@ export const signUpUserFromDB = async (
   );
   return {
     user: createUser,
+    accessToken,
+  };
+};
+export const loginUserFromDb = async (
+  data: IUser
+): Promise<{ user: IUser; accessToken: string }> => {
+  const isExistUser = await User.findOne({ email: data.email });
+  if (!isExistUser) {
+    throw new API_Error(StatusCodes.BAD_REQUEST, "User Not Found");
+  }
+  if (isExistUser.password !== data.password) {
+    throw new API_Error(StatusCodes.BAD_REQUEST, "Password Incorrect");
+  }
+  // generate access token
+  const accessToken = jwtHelpers.createToken(
+    { userId: isExistUser._id },
+    config.jwt.secret_token as Secret,
+    config.jwt.expire_in as string
+  );
+  return {
+    user: isExistUser,
     accessToken,
   };
 };

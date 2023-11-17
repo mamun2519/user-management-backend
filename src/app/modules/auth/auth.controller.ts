@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import catchAsyncFn from "../../../utils/catchAsynFn";
 import sendApiResponse from "../../../utils/apiResponse";
 import { StatusCodes } from "http-status-codes";
+import { AuthService } from "./auth.services";
 
 const signUpUser = catchAsyncFn(async (req: Request, res: Response) => {
   const result = await AuthService.signUpUserFromDB(req.body);
