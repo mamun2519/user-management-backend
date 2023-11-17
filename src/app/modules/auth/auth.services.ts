@@ -5,6 +5,7 @@ import { User } from "../user/user.model";
 import { jwtHelpers } from "../../../utils/jwtToken";
 import config from "../../../config";
 import { Secret } from "jsonwebtoken";
+import { IPasswordChange } from "./auth.interface";
 
 export const signUpUserFromDB = async (
   data: IUser
@@ -47,15 +48,21 @@ export const loginUserFromDb = async (
   };
 };
 export const forgetPasswordFromDB = async (
-  data: Partial<IUser>
+  data: IPasswordChange
 ): Promise<{ message: string }> => {
+  console.log(data);
   const isExistUser = await User.findOne({ email: data.email });
+  console.log(isExistUser);
   if (!isExistUser) {
     throw new API_Error(StatusCodes.BAD_REQUEST, "User Not Found");
   }
-  const updatedUser = await User.updateOne({ email: isExistUser }, data, {
-    new: true,
-  });
+  const updatedUser = await User.updateOne(
+    { email: isExistUser.email },
+    { password: data.newPassword },
+    {
+      new: true,
+    }
+  );
 
   return {
     message: "Updated Success",

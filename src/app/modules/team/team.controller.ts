@@ -26,7 +26,7 @@ const myTeam = catchAsyncFn(async (req: Request, res: Response) => {
   });
 });
 const deleteTeam = catchAsyncFn(async (req: Request, res: Response) => {
-  const result = await TeamService.deleteTeamFromDB(req.body);
+  const result = await TeamService.deleteTeamFromDB(req.params.id);
   sendApiResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

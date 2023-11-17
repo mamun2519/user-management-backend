@@ -11,7 +11,7 @@ const createTeamFromDB = async (data: ITeam): Promise<ITeam> => {
 };
 
 const myTeamFromDB = async (userId: string): Promise<ITeam[]> => {
-  const myTeam = await Team.find({ userId });
+  const myTeam = await Team.find({ userId }).populate("teamMember");
   return myTeam;
 };
 
