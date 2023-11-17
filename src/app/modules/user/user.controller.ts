@@ -4,7 +4,7 @@ import sendApiResponse from "../../../utils/apiResponse";
 import { StatusCodes } from "http-status-codes";
 import { UserService } from "./user.services";
 import pick from "../../../utils/pick";
-import { UserSearchAbleFiled } from "./user.constant";
+import { UserFilterAbleFiled, UserSearchAbleFiled } from "./user.constant";
 import { paginationSpeared } from "../../../constents/pagination";
 
 const createUser = catchAsyncFn(async (req: Request, res: Response) => {
@@ -18,7 +18,9 @@ const createUser = catchAsyncFn(async (req: Request, res: Response) => {
 });
 const getAllUser = catchAsyncFn(async (req: Request, res: Response) => {
   // search and filter speared
-  const filter: any = pick(req.query, UserSearchAbleFiled);
+  console.log(req.query);
+  const filter: any = pick(req.query, UserFilterAbleFiled);
+  console.log(filter);
   // pagination speared
   const pagination = pick(req.query, paginationSpeared);
   const result = await UserService.getAllUserFromDB(filter, pagination);

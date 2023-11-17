@@ -1,15 +1,16 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { StatusCodes } from "http-status-codes";
-import { UserRoutes } from "./app/modules/user/user.route";
+
 import globalErrorHandler from "./app/middlewares/globalError";
+import { RootRoutes } from "./app/routes";
 const app: Application = express();
 
 // Project Middleware
 app.use([cors(), express.json(), express.urlencoded({ extended: true })]);
 
 // Application Routes
-app.use("/api/", UserRoutes);
+app.use("/api", RootRoutes);
 //Application Root Route
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send({ success: true, message: "Server Is Running" });

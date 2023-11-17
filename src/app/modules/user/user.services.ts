@@ -50,7 +50,7 @@ const getAllUserFromDB = async (
   // where conditions
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
-  const user = await User.find(whereConditions);
+  const user = await User.find(whereConditions).skip(skip).limit(limit);
   const total = await User.countDocuments(whereConditions);
 
   return {
