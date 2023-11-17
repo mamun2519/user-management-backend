@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import catchAsyncFn from "../../../utils/catchAsynFn";
 import sendApiResponse from "../../../utils/apiResponse";
 import { StatusCodes } from "http-status-codes";
+import { JwtPayload } from "jsonwebtoken";
+import { TeamService } from "./team.services";
 
 const createTeam = catchAsyncFn(async (req: Request, res: Response) => {
-  const result = await TeamController.createTeamFromDB(req.body);
+  const result = await TeamService.createTeamFromDB(req.body);
   sendApiResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -13,17 +15,9 @@ const createTeam = catchAsyncFn(async (req: Request, res: Response) => {
   });
 });
 
-const allTeam = catchAsyncFn(async (req: Request, res: Response) => {
-  const result = await TeamController.allTeamFromDB();
-  sendApiResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: "team fetch successfully",
-    data: result,
-  });
-});
 const myTeam = catchAsyncFn(async (req: Request, res: Response) => {
-  const result = await TeamController.myTeamFromDB(req.body);
+  const user = req.user as JwtPayload;
+  const result = await TeamService.myTeamFromDB(user.userId as string);
   sendApiResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -32,7 +26,7 @@ const myTeam = catchAsyncFn(async (req: Request, res: Response) => {
   });
 });
 const deleteTeam = catchAsyncFn(async (req: Request, res: Response) => {
-  const result = await TeamController.deleteTeamFromDB(req.body);
+  const result = await TeamService.deleteTeamFromDB(req.body);
   sendApiResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -45,5 +39,4 @@ export const TeamController = {
   createTeam,
   myTeam,
   deleteTeam,
-  allTeam,
 };

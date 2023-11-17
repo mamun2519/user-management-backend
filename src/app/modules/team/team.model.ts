@@ -24,4 +24,4 @@ export const UserTeam = new Schema<ITeam, TeamModel>(
 );
 
 // Team Model
-export const User = model<ITeam, TeamModel>("Team", UserTeam);
+export const Team = model<ITeam, TeamModel>("Team", UserTeam);
