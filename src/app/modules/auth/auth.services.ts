@@ -64,4 +64,6 @@ export const forgetPasswordFromDB = async (
 
 export const AuthService = {
   signUpUserFromDB,
+  loginUserFromDb,
+  forgetPasswordFromDB,
 };
