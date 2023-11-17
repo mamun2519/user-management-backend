@@ -7,6 +7,7 @@ export type IUser = {
   avatar: string;
   email: string;
   domain: string;
+  password: string;
   available: boolean;
 };
 export type UserModel = Model<IUser, Record<string, unknown>>;
