@@ -46,6 +46,21 @@ export const loginUserFromDb = async (
     accessToken,
   };
 };
+export const forgetPasswordFromDB = async (
+  data: Partial<IUser>
+): Promise<{ message: string }> => {
+  const isExistUser = await User.findOne({ email: data.email });
+  if (!isExistUser) {
+    throw new API_Error(StatusCodes.BAD_REQUEST, "User Not Found");
+  }
+  const updatedUser = await User.updateOne({ email: isExistUser }, data, {
+    new: true,
+  });
+
+  return {
+    message: "Updated Success",
+  };
+};
 
 export const AuthService = {
   signUpUserFromDB,
