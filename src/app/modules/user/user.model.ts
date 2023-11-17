@@ -15,6 +15,7 @@ export const UserSchema = new Schema<IUser, UserModel>(
     email: {
       type: String,
       required: [true, "Email Is Required"],
+      unique: true,
     },
     password: {
       type: String,
