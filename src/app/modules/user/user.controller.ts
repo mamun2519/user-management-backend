@@ -18,7 +18,7 @@ const createUser = catchAsyncFn(async (req: Request, res: Response) => {
 });
 const getAllUser = catchAsyncFn(async (req: Request, res: Response) => {
   // search and filter speared
-  console.log(req.query);
+
   const filter: any = pick(req.query, UserFilterAbleFiled);
   console.log(filter);
   // pagination speared

@@ -16,6 +16,7 @@ const myTeamFromDB = async (userId: string): Promise<ITeam[]> => {
 };
 
 const deleteTeamFromDB = async (id: string): Promise<ITeam | null> => {
+  console.log(id);
   const team = await Team.findByIdAndDelete(id);
   return team;
 };

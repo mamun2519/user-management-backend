@@ -14,11 +14,12 @@ const createUserFromDB = async (data: IUser): Promise<IUser> => {
 const getAllUserFromDB = async (
   filter: IUserFilters,
   pagination: IPaginationOptions
-): Promise<IGenericResponse<IUser[]>> => {
+): Promise<IGenericResponse<any>> => {
   const { page, limit, skip, sortBy, sortOrder } =
     PaginationHelper.calculatePagination(pagination);
   const { searchTerm, ...filtersData } = filter;
 
+  console.log("filterData", filtersData);
   const andConditions = [];
   // Searching
   if (searchTerm) {
@@ -40,7 +41,7 @@ const getAllUserFromDB = async (
       })),
     });
   }
-
+  console.log(andConditions[0]);
   // Sorting
   const sortCondition: { [key: string]: SortOrder } = {};
   if (sortBy && sortOrder) {
@@ -52,6 +53,12 @@ const getAllUserFromDB = async (
     andConditions.length > 0 ? { $and: andConditions } : {};
   const user = await User.find(whereConditions).skip(skip).limit(limit);
   const total = await User.countDocuments(whereConditions);
+  const category = await User.distinct("domain");
+  const domain = category.map((title: string) => {
+    return {
+      title,
+    };
+  });
 
   return {
     meta: {
@@ -59,7 +66,10 @@ const getAllUserFromDB = async (
       limit,
       total,
     },
-    data: user,
+    data: {
+      user,
+      domain,
+    },
   };
 };
 const getSingleUserByIdFromDB = async (id: string): Promise<IUser | null> => {

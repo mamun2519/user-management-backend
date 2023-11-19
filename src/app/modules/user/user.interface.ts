@@ -16,5 +16,5 @@ export type IUserFilters = {
   searchTerm: string;
   domain: string;
   gender: string;
-  available: string;
+  available: boolean;
 };
